@@ -6,6 +6,7 @@ import ResultsPanel from './components/ResultsPanel';
 import PhaseDiagram from './components/PhaseDiagram';
 import MicrostructureViewer from './components/MicrostructureViewer';
 import TutorPanel from './components/TutorPanel';
+import Reveal from './components/Reveal';
 
 export default function App() {
   const [composition, setComposition] = useState<Composition>(EMPTY_COMPOSITION);
@@ -34,33 +35,44 @@ export default function App() {
     <div className="app">
       <header className="hero">
         <p className="badges">
-          <span className="badge">Kiroween 2026</span>
+          <span className="badge"><span className="dot" aria-hidden="true" />Kiroween 2026</span>
           <span className="badge">Frankenstein</span>
           <span className="badge">Built with Kiro</span>
         </p>
-        <h1>⚗️ Alloy Alchemist</h1>
+        <h1>⚗️ Alloy <span className="ember-word">Alchemist</span></h1>
         <p className="tagline">
           Mix a steel like ingredients in a cauldron — and watch the app predict its microstructure,
           hardness, and heat treatment. Medieval alchemy, 1960s metallurgy equations, and an AI tutor
           walk into one app.
         </p>
+        <div className="molten-bar" aria-hidden="true" />
       </header>
 
       <main className="layout">
         <div className="col">
-          <CompositionMixer
-            composition={composition}
-            activePresetId={activePresetId}
-            onCompositionChange={handleCompositionChange}
-            onPreset={applyPreset}
-            onRecipe={applyRecipe}
-          />
-          <PhaseDiagram carbon={composition.C} temperature={temperature} onTemperatureChange={setTemperature} />
+          <Reveal>
+            <CompositionMixer
+              composition={composition}
+              activePresetId={activePresetId}
+              onCompositionChange={handleCompositionChange}
+              onPreset={applyPreset}
+              onRecipe={applyRecipe}
+            />
+          </Reveal>
+          <Reveal delay={100}>
+            <PhaseDiagram carbon={composition.C} temperature={temperature} onTemperatureChange={setTemperature} />
+          </Reveal>
         </div>
         <div className="col">
-          <ResultsPanel analysis={analysis} />
-          <MicrostructureViewer prediction={analysis.microstructure} />
-          <TutorPanel notes={notes} />
+          <Reveal>
+            <ResultsPanel analysis={analysis} />
+          </Reveal>
+          <Reveal delay={100}>
+            <MicrostructureViewer prediction={analysis.microstructure} />
+          </Reveal>
+          <Reveal delay={150}>
+            <TutorPanel notes={notes} />
+          </Reveal>
         </div>
       </main>
 

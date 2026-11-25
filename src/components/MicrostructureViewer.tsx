@@ -21,12 +21,12 @@ function hashString(s: string): number {
 }
 
 const PHASE_COLORS: Record<PhaseName, string> = {
-  Ferrite: '#c9ced4',
+  Ferrite: '#d8d5cd',
   Pearlite: '#8a7f70',
-  Martensite: '#2e2a26',
+  Martensite: '#3a3129',
   Bainite: '#6e6257',
-  Austenite: '#e6e1d5',
-  Cementite: '#1c1a18',
+  Austenite: '#efe8d2',
+  Cementite: '#241f19',
 };
 
 interface Shape {
@@ -77,7 +77,7 @@ export default function MicrostructureViewer({ prediction }: { prediction: Micro
         </button>
       </div>
 
-      <svg viewBox="0 0 560 210" className="micro" role="img" aria-label={`Schematic microstructure: ${phases.map((p) => `${Math.round(p.fraction * 100)} percent ${p.phase}`).join(', ')}`}>
+      <svg key={seedKey} viewBox="0 0 560 210" className="micro swap" role="img" aria-label={`Schematic microstructure: ${phases.map((p) => `${Math.round(p.fraction * 100)} percent ${p.phase}`).join(', ')}`}>
         <defs>
           <pattern id="pearlite-stripes" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
             <rect width="6" height="6" fill="#b9ac9c" />

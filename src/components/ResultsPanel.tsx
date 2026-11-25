@@ -1,4 +1,5 @@
 import type { Analysis } from '../lib/metallurgy';
+import AnimatedNumber from './AnimatedNumber';
 
 function PhaseBars({ phases }: { phases: Analysis['microstructure']['annealed'] }) {
   return (
@@ -35,25 +36,25 @@ export default function ResultsPanel({ analysis }: { analysis: Analysis }) {
       <div className="stat-grid">
         <div className="stat">
           <span className="stat-label">Martensite start (Ms)</span>
-          <span className="stat-value">{ms} °C</span>
+          <span className="stat-value"><AnimatedNumber value={ms} suffix=" °C" /></span>
           <span className="stat-note">Andrews (1965)</span>
         </div>
         <div className="stat">
           <span className="stat-label">Ac3 — fully austenitic</span>
-          <span className="stat-value">{ac3} °C</span>
+          <span className="stat-value"><AnimatedNumber value={ac3} suffix=" °C" /></span>
           <span className="stat-note">Andrews (1965)</span>
         </div>
         <div className="stat">
           <span className="stat-label">Carbon equivalent (CE)</span>
-          <span className="stat-value">{ce.toFixed(2)}</span>
+          <span className="stat-value"><AnimatedNumber value={ce} decimals={2} /></span>
           <span className="stat-note">{ce <= 0.4 ? 'Welds without preheat' : ce <= 0.6 ? 'Preheat recommended' : 'Preheat + procedure required'}</span>
         </div>
         <div className="stat">
           <span className="stat-label">Est. as-quenched hardness</span>
           <span className="stat-value">
-            {hardness.typical === 0 ? '—' : `${hardness.low}–${hardness.high} HRC`}
+            {hardness.typical === 0 ? '—' : (<><AnimatedNumber value={hardness.low} />–<AnimatedNumber value={hardness.high} /> HRC</>)}
           </span>
-          <span className="stat-note">{hardness.typical === 0 ? 'Too little carbon to harden' : `Typical ≈ ${hardness.typical} HRC`}</span>
+          <span className="stat-note">{hardness.typical === 0 ? 'Too little carbon to harden' : (<>Typical ≈ <AnimatedNumber value={hardness.typical} /> HRC</>)}</span>
         </div>
       </div>
 

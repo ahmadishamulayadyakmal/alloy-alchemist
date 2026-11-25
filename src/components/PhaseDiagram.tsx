@@ -71,10 +71,16 @@ export default function PhaseDiagram({ carbon, temperature, onTemperatureChange 
         <text x={x(0.3)} y={y(620)} className="diagram-label">α + Pearlite</text>
         <text x={x(1.45)} y={y(620)} className="diagram-label">Pearlite + Fe₃C</text>
 
-        {/* composition + temperature marker */}
-        <line x1={x(carbon)} y1={MT} x2={x(carbon)} y2={H - MB} className="marker" />
-        <line x1={ML} y1={y(temperature)} x2={W - MR} y2={y(temperature)} className="marker" />
-        <circle cx={x(carbon)} cy={y(temperature)} r={7} className="marker-dot" />
+        {/* composition + temperature marker — glides via CSS transform */}
+        <g className="marker-group" style={{ transform: `translate(${x(carbon)}px, 0)` }}>
+          <line x1={0} y1={MT} x2={0} y2={H - MB} className="marker" />
+        </g>
+        <g className="marker-group" style={{ transform: `translate(0, ${y(temperature)}px)` }}>
+          <line x1={ML} y1={0} x2={W - MR} y2={0} className="marker" />
+        </g>
+        <g className="marker-group" style={{ transform: `translate(${x(carbon)}px, ${y(temperature)}px)` }}>
+          <circle cx={0} cy={0} r={7} className="marker-dot" />
+        </g>
       </svg>
 
       <label className="slider-row temp-slider">
@@ -89,6 +95,7 @@ export default function PhaseDiagram({ carbon, temperature, onTemperatureChange 
           step={10}
           value={temperature}
           aria-label="Temperature in degrees Celsius"
+          style={{ background: `linear-gradient(90deg, var(--ember) ${((temperature - 500) / 1000) * 100}%, var(--line) ${((temperature - 500) / 1000) * 100}%)` }}
           onChange={(e) => onTemperatureChange(parseInt(e.target.value, 10))}
         />
       </label>

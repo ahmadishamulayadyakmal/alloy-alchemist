@@ -51,6 +51,7 @@ export default function CompositionMixer({ composition, activePresetId, onCompos
               step={el.step}
               value={composition[el.key]}
               aria-label={`${el.name} content in weight percent`}
+              style={{ background: `linear-gradient(90deg, var(--ember) ${(composition[el.key] / el.max) * 100}%, var(--line) ${(composition[el.key] / el.max) * 100}%)` }}
               onChange={(e) =>
                 onCompositionChange({ ...composition, [el.key]: parseFloat(e.target.value) })
               }
